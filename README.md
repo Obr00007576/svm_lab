@@ -34,4 +34,6 @@ I raised the gamma from 0.1 to 10. According to the picture, it can be seen that
 
 ## Work6
 
+![1681427055269](https://user-images.githubusercontent.com/51303014/231901537-a1a25bb5-0286-45eb-8f8c-8bfc900a4797.jpg)
 
+As epsilon grows, so does mse. Epsilon represents the width of the allowed support vector. The smaller the epsilon, the more points are outside, which will result in a greater penalty or even overfitting. If the epsilon is large, the smoother the line is, the less points are penalized until it becomes even a straight line. So when we use epsilon-svr, we need to weigh the two situations to fit a good result.
