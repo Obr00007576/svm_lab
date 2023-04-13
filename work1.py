@@ -1,0 +1,52 @@
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.ticker as ticker
+
+data_x, data_y = [],[]
+with open('svmdata2.txt', 'r') as f:
+    content = f.read()
+    content = content.split('\n')
+    del content[0]
+    del content[-1]
+    for line in content:
+        line_data = line.split()
+        data_x.append((line_data[1], line_data[2]))
+        data_y.append(-1) if line_data[3]=='green' else data_y.append(1)
+X_train=np.array(data_x, dtype=float)
+y_train=np.array(data_y, dtype=float)
+
+
+# 创建SVM对象
+svm = SVC(kernel='linear', C=1)
+
+# 训练SVM模型
+svm.fit(X_train, y_train)
+
+# 获取支持向量的数量
+support_vectors = svm.support_vectors_
+
+# 绘制决策边界和支持向量
+def plot_support_vectors(svm, X, y):
+    plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.coolwarm, s=30)
+    xlim = plt.gca().get_xlim()
+    ylim = plt.gca().get_ylim()
+    xx, yy = np.meshgrid(np.linspace(xlim[0], xlim[1], 100), np.linspace(ylim[0], ylim[1], 100))
+    Z = svm.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+    plt.contourf(xx, yy, Z, cmap=plt.cm.coolwarm, alpha=0.2)
+    plt.scatter(support_vectors[:, 0], support_vectors[:, 1], s=100, linewidth=1, facecolors='none', edgecolors='k')
+    plt.show()
+
+# 绘制决策边界和支持向量
+plot_support_vectors(svm, X_train, y_train)
+
+# 获取训练和测试样本的分类错误
+train_error = 1 - svm.score(X_train, y_train)
+#test_error = 1 - svm.score(X_test, y_test)
+
+print("支持向量的数量：", len(svm.support_))
+print("训练样本的分类错误：", train_error)
+#print("测试样本的分类错误：", test_error)
