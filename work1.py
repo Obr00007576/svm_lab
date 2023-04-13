@@ -5,19 +5,23 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.ticker as ticker
 
-data_x, data_y = [],[]
-with open('svmdata2.txt', 'r') as f:
-    content = f.read()
-    content = content.split('\n')
-    del content[0]
-    del content[-1]
-    for line in content:
-        line_data = line.split()
-        data_x.append((line_data[1], line_data[2]))
-        data_y.append(-1) if line_data[3]=='green' else data_y.append(1)
-X_train=np.array(data_x, dtype=float)
-y_train=np.array(data_y, dtype=float)
+def exract_data(file):
+    data_x, data_y = [],[]
+    with open(file, 'r') as f:
+        content = f.read()
+        content = content.split('\n')
+        del content[0]
+        del content[-1]
+        for line in content:
+            line_data = line.split()
+            data_x.append((line_data[1], line_data[2]))
+            data_y.append(-1) if line_data[3]=='green' else data_y.append(1)
+    X_train=np.array(data_x, dtype=float)
+    y_train=np.array(data_y, dtype=float)
+    return X_train,y_train
 
+X_train, y_train = exract_data('svmdata2.txt')
+X_test, y_test = exract_data('svmdata2test.txt')
 
 # 创建SVM对象
 svm = SVC(kernel='linear', C=1)
@@ -45,8 +49,8 @@ plot_support_vectors(svm, X_train, y_train)
 
 # 获取训练和测试样本的分类错误
 train_error = 1 - svm.score(X_train, y_train)
-#test_error = 1 - svm.score(X_test, y_test)
+test_error = 1 - svm.score(X_test, y_test)
 
-print("支持向量的数量：", len(svm.support_))
-print("训练样本的分类错误：", train_error)
-#print("测试样本的分类错误：", test_error)
+print("sv num:", len(svm.support_))
+print("train error", train_error)
+print("test error", test_error)
