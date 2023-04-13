@@ -23,20 +23,16 @@ def exract_data(file):
 X_train, y_train = exract_data('svmdata2.txt')
 X_test, y_test = exract_data('svmdata2test.txt')
 
-# 创建SVM对象
 #svm = SVC(kernel='poly', C=1, gamma=0.1)
 #svm = SVC(kernel='poly', C=1, gamma=0.5)
 #svm = SVC(kernel='poly', C=1, gamma=10)
 #svm = SVC(kernel='linear', C=190)
 svm = SVC(kernel='linear', C=1)
 
-# 训练SVM模型
 svm.fit(X_train, y_train)
 
-# 获取支持向量的数量
 support_vectors = svm.support_vectors_
 
-# 绘制决策边界和支持向量
 def plot_support_vectors(svm, X, y):
     plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.coolwarm, s=30)
     xlim = plt.gca().get_xlim()
@@ -48,10 +44,8 @@ def plot_support_vectors(svm, X, y):
     plt.scatter(support_vectors[:, 0], support_vectors[:, 1], s=100, linewidth=1, facecolors='none', edgecolors='k')
     plt.show()
 
-# 绘制决策边界和支持向量
 plot_support_vectors(svm, X_train, y_train)
 
-# 获取训练和测试样本的分类错误
 train_error = 1 - svm.score(X_train, y_train)
 test_error = 1 - svm.score(X_test, y_test)
 
