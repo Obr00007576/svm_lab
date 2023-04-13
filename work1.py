@@ -1,9 +1,6 @@
-from sklearn import datasets
-from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 import matplotlib.pyplot as plt
 import numpy as np
-import matplotlib.ticker as ticker
 
 def exract_data(file):
     data_x, data_y = [],[]
