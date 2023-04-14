@@ -24,6 +24,8 @@ X_test, y_test = exract_data('svmdata2test.txt')
 #svm = SVC(kernel='poly', C=1, gamma=0.5)
 #svm = SVC(kernel='poly', C=1, gamma=10)
 #svm = SVC(kernel='linear', C=190)
+#svm = SVC(kernel='poly', C=1, degree=3)
+#svm = SVC(kernel='rbf', C=1)
 svm = SVC(kernel='linear', C=1)
 
 svm.fit(X_train, y_train)
